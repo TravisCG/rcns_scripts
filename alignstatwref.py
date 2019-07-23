@@ -1,5 +1,10 @@
 #!/usr/bin/python3
 
+"""
+  Alignment statistics with reference name
+  prefix.
+"""
+
 import pysam
 import sys
 
@@ -43,7 +48,7 @@ for i in refseq:
     refseq[i] = "".join(refseq[i])
 
 # Print header
-print("mapped\taligned_len\tmismatchnum\tindelnum\traw_read_len")
+print("mapped\taligned_len\tmismatchnum\tindelnum\traw_read_len\treference_prefix")
 
 # Parsing reads
 for i in reads:
@@ -67,5 +72,9 @@ for i in reads:
     output.append(str(mismatchnum))
     output.append(str(indelnum))
     output.append(str(i.query_length))
+    if i.reference_name != None:
+        output.append(i.reference_name.split("_")[0])
+    else:
+        output.append("*")
 
     print("\t".join(output))
