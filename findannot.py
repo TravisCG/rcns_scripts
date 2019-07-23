@@ -19,18 +19,21 @@ def parse(csq):
 def printres(gt, annot):
     print(gt, end = "\t")
     for i in ["cons", "gene", "clinsig", "motif_name", "motif_score", "pheno", "gerp", "gerprs", "provean", "clinvar", "clinvarrs"]:
-        print(",".join(list(annot[i])), end = "\t")
+        print(",".join(list(annot[i])), "\t", end ="")
     print()
 
 gt = dict()
 
 for i in open(sys.argv[1]):
     fields = i.rstrip().split("\t")
-    gt[fields[1]] = i.rstrip()
+    gt[fields[2]] = i.rstrip()
 
 for i in gzip.open(sys.argv[2]):
     line = i.decode('utf-8').rstrip()
     if line.startswith("#"):
+        if line.startswith("#CHROM"):
+            line = "chr\tpos\tid\t" + "\t".join(line.split("\t")[9:])
+            print(line,"cons", "gene", "clinsig", "motif_name", "motif_score", "pheno", "gerp", "gerprs", "provean", "clinvar", "clinvarrs",sep="\t")
         continue
     fields = line.split("\t")
     if fields[2] in gt:
