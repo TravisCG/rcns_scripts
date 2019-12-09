@@ -18,7 +18,7 @@ def walkup(idx, hierarchy, steps, sig):
         k = idx + "\t" + p
         if k not in steps:
             steps[k] = sig
-        nosig = ['0'] * len(sig)
+        nosig = [" "] + ['0'] * (len(sig) - 1)
         walkup(p, hierarchy, steps, nosig)
 
 hier  = dict()
