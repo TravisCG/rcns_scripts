@@ -18,7 +18,8 @@ def walkup(idx, hierarchy, steps, sig):
         k = idx + "\t" + p
         if k not in steps:
             steps[k] = sig
-        walkup(p, hierarchy, steps, "0")
+        nosig = ['0'] * len(sig)
+        walkup(p, hierarchy, steps, nosig)
 
 hier  = dict()
 steps = dict()
@@ -29,20 +30,18 @@ for i in open(sys.argv[2]):
         hier[fields[0]] = list()
     hier[fields[0]].append(fields[1])
 
-for column in [2,3,4,5,6]:
-    ontofile = open(sys.argv[1])
-    header = ontofile.readline().rstrip().split("\t")
-    for i in ontofile:
-        fields = i.rstrip().split("\t")
-        idx = fields[1]
-        sig = fields[column] # change this according to which column you need
-        if sig == 'ns':
-            continue
-        walkup(idx, hier, steps, sig)
-    ontofile.close()
+ontofile = open(sys.argv[1])
+header = ontofile.readline().rstrip().split("\t")
+header.insert(1, "goparent")
+for i in ontofile:
+    fields = i.rstrip().split("\t")
+    idx = fields[0]
+    #sig = "\t".join(fields[1:])
+    sig = fields[1:]
+    walkup(idx, hier, steps, sig)
+ontofile.close()
 
-    out = open(header[column-1], "w")
-    out.write("source\tdestination\tsignif\n")
-    for s in steps:
-        out.write(s + "\t" + steps[s] + "\n")
-    out.close()
+print("\t".join(header))
+
+for s in steps:
+    print(s + "\t" + "\t".join(steps[s]))
