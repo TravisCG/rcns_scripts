@@ -12,6 +12,6 @@ for f in files:
 	print("readFile1 = /srv/qgen/patients/%s" % (f))
 	print("readFile2 = /srv/qgen/patients/%s" % (f.replace("_R1_", "_R2_")))
 	print("intsrument = MiSeq")
-	print("primerFile = /srv/qgen/patients/CDHS-18017Z-139.primers.txt")
-	print("roiBedFile = /srv/qgen/patients/CDHS-18017Z-139.roi.bed")
+	print("primerFile = /srv/qgen/patients/CDHS-15872Z-1181.primers.txt")
+	print("roiBedFile = /srv/qgen/patients/CDHS-15872Z-1181.roi.bed")
 	print("platform = Illumina\nrunCNV = False\nsampleType =  Single\nduplex = False\n")
