@@ -5,7 +5,7 @@
    Mauve creates a guide tree, but
    the names are just seq1...seqN
    This script renames it using
-   the alignment file
+   the log file
 """
 
 import sys
@@ -17,8 +17,9 @@ target   = re.compile("seq(\d+)")
 for i in open(sys.argv[1]):
     if i.startswith('>'):
         break
-    if "File" in i and "Sequence" in i:
-        seqnames.append(i.rstrip().split("/")[-1])
+    if "base pairs" in i:
+        filename = " ".join(i.rstrip().split()[:-3])
+        seqnames.append(filename)
 
 for i in open(sys.argv[2]):
     tokens = i.rstrip().split(":")
