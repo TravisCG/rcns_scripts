@@ -8,22 +8,23 @@ def countpeaks(exp):
         num += len(exp[chrx])
     return num
 
-def overlap(regio, array, lowindex, hiindex):
-    if regio[1] < array[lowindex][0] or regio[0] > array[hiindex][1]:
+def overlap(regio, array, lowindex, hiindex, flanking):
+    if regio[1] < array[lowindex][0] - flanking or regio[0] > array[hiindex][1] + flanking:
         return False
     if hiindex - lowindex < 2:
-        if regio[1] > array[lowindex][0] and regio[0] < array[lowindex][1]:
+        if regio[1] > array[lowindex][0] - flanking and regio[0] < array[lowindex][1] + flanking:
             return True
-        if regio[1] > array[hiindex][0] and regio[0] < array[hiindex][1]:
+        if regio[1] > array[hiindex][0] - flanking and regio[0] < array[hiindex][1] + flanking:
             return True
         return False
     mid = lowindex + int((hiindex - lowindex) / 2)
-    if regio[1] > array[lowindex][0] and regio[0] < array[mid][1]:
-        return overlap(regio, array, lowindex, mid)
-    if regio[1] > array[mid][0] and regio[0] < array[hiindex][1]:
-        return overlap(regio, array, mid, hiindex)
+    if regio[1] > array[lowindex][0] - flanking and regio[0] < array[mid][1] + flanking:
+        return overlap(regio, array, lowindex, mid, flanking)
+    if regio[1] > array[mid][0] - flanking and regio[0] < array[hiindex][1] + flanking:
+        return overlap(regio, array, mid, hiindex, flanking)
 
 table = open(sys.argv[1])
+flanking = int(sys.argv[2])
 table.readline()
 
 experiment = dict()
@@ -43,7 +44,7 @@ for i in table:
     experiment[expid][chrx].append( [start, end] )
 
 allexp = list(allexp)
-
+print("exp1 exp2 peak1 peak2 common")
 for i in range(len(allexp) - 1):
     exp1 = allexp[i]
     exp1peaks = countpeaks(experiment[exp1])
@@ -57,7 +58,7 @@ for i in range(len(allexp) - 1):
             peak1 = sorted(experiment[exp1][chrx], key = lambda x: x[0])
             peak2 = sorted(experiment[exp2][chrx], key = lambda x: x[0])
             for p in peak1:
-                o = overlap(p, peak2, 0, len(peak2)-1)
+                o = overlap(p, peak2, 0, len(peak2)-1, flanking)
                 if o:
                     overlapc += 1
         print(exp1, exp2, exp1peaks, exp2peaks, overlapc)
