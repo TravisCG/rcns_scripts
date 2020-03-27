@@ -29,4 +29,4 @@ for i in infile:
 	if count % 1000000 == 0:
 		print("Process:", count, file=sys.stderr)
 infile.close()
-print(fastq, len(foundkmer), totalcount, sep = "\t")
+print(fastq, len(foundkmer), totalcount, count / 4, sep = "\t")
