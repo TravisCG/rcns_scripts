@@ -22,8 +22,8 @@ for i in open(sys.argv[2]):
 	alen = int(fields[3])
 
 	if qid in seqlen:
-		if alen > seqlen[qid] * 0.9:
+		if alen > seqlen[qid] * 0.90:
 			print(i,end="")
 	if hid in seqlen:
-		if alen > seqlen[hid] * 0.9:
+		if alen > seqlen[hid] * 0.90:
 			print(i,end="")
