@@ -11,12 +11,13 @@ for i in open(sys.argv[1]):
 	markerpos.add("%s_%s_%s_%s" % (fields[0], fields[1], fields[3], fields[4]))
 
 for i in sys.stdin:
-	if i.startswith("##"):
-		continue
-	if i.startswith("#CHROM"):
+	if i.startswith("#"):
 		print(i.rstrip())
 		continue
 	fields = i.split("\t")
-	pos = "%s_%s_%s_%s" % (fields[0], fields[1], fields[3], fields[4])
-	if pos in markerpos:
-		print(i.rstrip())
+	alts = fields[4].split(",")
+	for a in alts:
+		pos = "%s_%s_%s_%s" % (fields[0], fields[1], fields[3], a)
+		if pos in markerpos:
+			print(i.rstrip())
+			break
