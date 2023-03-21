@@ -41,7 +41,7 @@ def whicheffect(ref, alt, cons):
              "coding_sequence_variant":       "nonsilent",
              "inframe_deletion":              "nonsilent",
              "inframe_insertion":             "nonsilent",
-             "missense_variant":              "silent",
+             "missense_variant":              "nonsilent",
              "stop_gained":                   "nonsilent",
              "synonymous_variant":            "silent",
              "splice_region_variant":         "silent",
@@ -68,9 +68,18 @@ def whicheffect(ref, alt, cons):
              "mature_miRNA_variant":          "noncoding"
             }
 
-    if cons in out:
-        return out[cons]
+    conslist = list()
+    for i in cons.split("&"):
+        if i in out:
+            conslist.append(out[i])
 
+    # Hierarchy
+    if "nonsilent" in conslist:
+        return "nonsilent"
+    if "silent" in conslist:
+        return "silent"
+    if "noncoding" in conslist:
+        return "noncoding"
     return "null"
 
 reannot = re.compile("CSQ=([^;]+)")
@@ -81,6 +90,8 @@ for i in open(sys.argv[1]):
         header = i.rstrip().split()[9:]
     if not i.startswith('#'):
         cols = i.rstrip().split('\t')
+        if cols[6] != "PASS":
+            continue
         alts = cols[4].split(',')
         althash = dict()
         for j in alts:
