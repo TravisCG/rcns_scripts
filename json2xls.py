@@ -25,19 +25,19 @@ def processClinvar(v):
         for cv in cvs:
             clinvar['id'].append(cv['id'])
             if 'variationId' in cv:
-                clinvar['variationid'].append(cv['variationId'])
+                clinvar['variationid'].append(str(cv['variationId']))
             clinvar['reviewstatus'].append(cv['reviewStatus'])
             clinvar['refallele'].append(cv['refAllele'])
             clinvar['altallele'].append(cv['altAllele'])
             if 'phenotypes' in cv:
                 clinvar['phenotypes'].append(','.join(cv['phenotypes']))
             if 'medGenIds' in cv:
-                clinvar['medgenids'].append(','.join(cv['medGenIds']))
+                clinvar['medgenids'].append(','.join(str(cv['medGenIds'])))
             clinvar['significance'].append(','.join(cv['significance']))
             if 'lastUpdateDate' in cv:
                 clinvar['lastUpdateData'].append(cv['lastUpdateDate'])
             if 'pubMedIds' in cv:
-                clinvar['pubmedIDS'].append(','.join(cv['pubMedIds']))
+                clinvar['pubmedIDS'].append(','.join(str(cv['pubMedIds'])))
     clinvar['id'] = ','.join(clinvar['id'])
     clinvar['variationid'] = ','.join(clinvar['variationid'])
     clinvar['reviewstatus'] = ','.join(clinvar['reviewstatus'])
@@ -135,9 +135,18 @@ for s in rawjson['positions']:
 
     samples = s['samples']
     gt = getGenotype(samples[0]['genotype'])
-    coverage = samples[0]['totalDepth']
-    variant_depth = samples[0]['alleleDepths'][1]
-    variant_freq = samples[0]['variantFrequencies'][0]
+    if 'totalDepth' in samples[0]:
+        coverage = samples[0]['totalDepth']
+    else:
+        coverage = "0"
+    if "alleleDepths" in samples[0]:
+        variant_depth = samples[0]['alleleDepths'][1]
+    else:
+        variant_depth = "0"
+    if "variantFrequencies" in samples[0]:
+        variant_freq = samples[0]['variantFrequencies'][0]
+    else:
+        variant_freq = "0"
 
     varis = s['variants']
     for v in varis:
