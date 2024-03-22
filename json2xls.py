@@ -126,7 +126,7 @@ for g in rawjson['genes']:
         genetable[gname]['inherit'] = ','.join(inheritance)
     else:
         print(gname, "gene already exists")
-
+print("vid\tchromosome\tposition\tdbsnp\trefAllele\taltAllele\tvariantType\tgenotype\tcoverage\tvariant_depth\tvariant_frequency\tgnomADfrequency\tprimateAI\tdann_score\trevel_score\thgvsc\thgvsp\tgeneID\tfunction\tcoding_impact\tsiftScore\tsiftPrediction\tpolyPhenScore\tpolyPhenPrediction\tgene\tgene_omimID\tphenotype_omimID\tphenotype\tinheritance\tclinvar_id\tclinvar_variationId\tclinvar_reviewstatus\tclinvar_refallele\tclinvar_altallele\tclinvar_phenotypes\tclinvar_medGenIds\tclinvar_significance\tclinvar_lastUpdatedDate\tclinvar_pubMedIds")
 for s in rawjson['positions']:
     chrx = s['chromosome']
     pos  = s['position']
