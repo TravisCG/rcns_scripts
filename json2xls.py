@@ -126,7 +126,7 @@ for g in rawjson['genes']:
         genetable[gname]['inherit'] = ','.join(inheritance)
     else:
         print(gname, "gene already exists")
-print("vid;chromosome;position;dbsnp;refAllele;altAllele;variantType;genotype;coverage;variant_depth;variant_frequency;gnomADfrequency;primateAI;dann_score;revel_score;hgvsc;hgvsp;geneID;function;coding_impact;siftScore;siftPrediction;polyPhenScore;polyPhenPrediction;gene;gene_omimID;phenotype_omimID;phenotype;inheritance;clinvar_id;clinvar_variationId;clinvar_reviewstatus;clinvar_refallele;clinvar_altallele;clinvar_phenotypes;clinvar_medGenIds;clinvar_significance;clinvar_lastUpdatedDate;clinvar_pubMedIds")
+print("vid\tchromosome\tposition\tdbsnp\trefAllele\taltAllele\tvariantType\tgenotype\tcoverage\tvariant_depth\tvariant_frequency\tgnomADfrequency\tprimateAI\tdann_score\trevel_score\thgvsc\thgvsp\tgeneID\tfunction\tcoding_impact\tsiftScore\tsiftPrediction\tpolyPhenScore\tpolyPhenPrediction\tgene\tgene_omimID\tphenotype_omimID\tphenotype\tinheritance\tclinvar_id\tclinvar_variationId\tclinvar_reviewstatus\tclinvar_refallele\tclinvar_altallele\tclinvar_phenotypes\tclinvar_medGenIds\tclinvar_significance\tclinvar_lastUpdatedDate\tclinvar_pubMedIds")
 for s in rawjson['positions']:
     chrx = s['chromosome']
     pos  = s['position']
@@ -170,4 +170,4 @@ for s in rawjson['positions']:
         if 'revel' in v:
             revel_score = v['revel']['score']
         tr = processTrascript(v, genetable)
-        print(vid, chrx, pos, dbsnp, refa, alta, varit, gt, coverage, variant_depth, variant_freq, gnomADfreq, primateAI, dann_score, revel_score, tr['hgvsc'], tr['hgvsp'], tr['geneId'], tr['function'], tr['impact'], tr['siftscore'], tr['siftpred'], tr['polyPhenScore'], tr['polyPhenPrediction'], tr['gene'], tr['omim_geneID'], tr['phenotype_omimid'], tr['phenotype'], tr['inheritance'], cv['id'], cv['variationid'], cv['reviewstatus'], cv['refallele'], cv['altallele'], cv['phenotypes'], cv['medgenids'], cv['significance'], cv['lastUpdateData'], cv['pubmedIDS'], sep = ";")
+        print(vid, chrx, pos, dbsnp, refa, alta, varit, gt, coverage, variant_depth, variant_freq, gnomADfreq, primateAI, dann_score, revel_score, tr['hgvsc'], tr['hgvsp'], tr['geneId'], tr['function'], tr['impact'], tr['siftscore'], tr['siftpred'], tr['polyPhenScore'], tr['polyPhenPrediction'], tr['gene'], tr['omim_geneID'], tr['phenotype_omimid'], tr['phenotype'], tr['inheritance'], cv['id'], cv['variationid'], cv['reviewstatus'], cv['refallele'], cv['altallele'], cv['phenotypes'], cv['medgenids'], cv['significance'], cv['lastUpdateData'], cv['pubmedIDS'], sep = "\t")
